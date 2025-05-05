@@ -1,24 +1,18 @@
-from gpiozero import Servo
+from gpiozero import AngularServo
 from time import sleep
- 
-myGPIO=17
 
-myCorrection=0.45
-maxPW=(2.0+myCorrection)/1000
-minPW=(1.0-myCorrection)/1000
- 
-servo = Servo(myGPIO,min_pulse_width=minPW,max_pulse_width=maxPW)
- 
+# Angiv GPIO-pinnen, som servoens signalledning er tilsluttet
+servo = AngularServo(17, min_angle=0, max_angle=180, min_pulse_width=0.0005, max_pulse_width=0.0024)
+
 while True:
-    servo.mid()
-    print("mid")
-    sleep(0.5)
-    servo.min()
-    print("min")
+    servo.angle = 0    # Flyt til 0 grader
+    print("Position: 0°")
     sleep(1)
-    servo.mid()
-    print("mid")
-    sleep(0.5)
-    servo.max()
-    print("max")
+
+    servo.angle = 90   # Flyt til 90 grader
+    print("Position: 90°")
+    sleep(1)
+
+    servo.angle = 180  # Flyt til 180 grader
+    print("Position: 180°")
     sleep(1)
