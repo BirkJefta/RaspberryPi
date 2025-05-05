@@ -1,19 +1,24 @@
 from gpiozero import Servo
 from time import sleep
-from signal import pause
+ 
+myGPIO=17
 
-
-servo = Servo(23)  
-#sætter 
-servo.mid()
-sleep(1)
-
-# Min position (0 grader – juster om nødvendigt)
-servo.min()
-sleep(1)
-
-# Stop signalet – ved at sætte servoen til mid eller None (valgfrit)
-servo.detach()  # Stopper PWM-signal
-
-# Alternativt kan du lade programmet køre og holde servoen i position
-# pause()  # holder programmet i gang
+myCorrection=0.45
+maxPW=(2.0+myCorrection)/1000
+minPW=(1.0-myCorrection)/1000
+ 
+servo = Servo(myGPIO,min_pulse_width=minPW,max_pulse_width=maxPW)
+ 
+while True:
+    servo.mid()
+    print("mid")
+    sleep(0.5)
+    servo.min()
+    print("min")
+    sleep(1)
+    servo.mid()
+    print("mid")
+    sleep(0.5)
+    servo.max()
+    print("max")
+    sleep(1)
